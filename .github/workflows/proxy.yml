@@ -1,0 +1,21 @@
+name: PUBG Proxy Europe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install 3proxy
+        run: |
+          sudo apt update
+          sudo apt install -y 3proxy
+          echo "socks -p1080" | sudo tee /etc/3proxy.cfg
+          sudo 3proxy /etc/3proxy.cfg &
+
+      - name: Show Proxy Endpoint
+        run: |
+          echo "✅ Proxy is running"
+          echo "📡 Use this IP and port:"
+          curl -s ifconfig.me && echo ":1080"
